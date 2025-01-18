@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBR App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin-top: 60px;
+            margin-bottom: 71px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Navigation Bar */
+        .bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #0489d1;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            
+        }
+
+        .nav-item {
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-item.active {
+            background-color: #0d035a;
+            color: white;
+        }
+
+        .nav-item:hover {
+            background-color: #0d035a;
+            box-shadow: 0 9px rgb(255, 174, 0);
+        }
+
+        .nav-item:active {
+            background-color: #0d035a;
+            transform: translateY(4px);
+            box-shadow: 0 7px rgba(201, 148, 1, 0.9);
+        }
+
+        .add-button {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            color: #0d035a;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            margin-top: -30px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .add-button:active {
+            background-color: #0d035a;
+            transform: translateY(4px);
+            box-shadow: 0 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .add-button:hover {
+            background-color: #0d035a;
+            box-shadow: 0 5px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+
+
+        /* BADILI HAPA HADI MBISHO */
+
+/* Navigation Bar */
+.nav {
+            position: fixed; /* Fixes the navbar to the top */
+            top: 0; /* Ensures it sticks to the top */
+            left: 0;
+            width: 100%; /* Ensures it spans the entire width */
+            z-index: 1000; /* Ensures it stays above other elements */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #026fb8; /* Primary color */
+            color: white;
+            padding: 10px 20px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+        }
+
+
+        .logo h2 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header h4 {
+            font-size: 15px;
+            margin-right: 35px;
+            padding-left: 10px;
+            padding-left: 10px;
+        }
+
+        .form-container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+            margin-top: 80px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            position: relative;
+        }
+
+        button:disabled {
+            background-color: #5a9dd9;
+            cursor: not-allowed;
+        }
+
+        .spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 3px solid #fff;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        #responseMessage {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 14px;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .success {
+            background-color: #015918;
+            color: #ffffff;
+        }
+
+        .error {
+            background-color: #960213;
+            color: #ffffff;
+        }
+
+        footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    footer a {
+      color: #fd9500;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+    .list{
+        width: 80px;
+        float: right;
+        padding-right: 15px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        font-size: 15PX
+    }
+    .list a{
+        text-decoration: none;
+        color: white;
+    }
+
+
+    </style>
+</head>
+<body>
+
+    <div class="main">
+
+        <!-- BADILI HAPA HADI MWISHO -->
+
+
+        <!-- Loading Spinner -->
+    <div id="loading-spinner">
+        <p>Loading...</p>
+    </div>
+
+    <nav class="nav">
+        <div class="logo">
+            <h2>MBR</h2>
+        </div>
+        <div class="header">
+            <h4>NEW PRODUCT</h4>
+        </div>
+    </nav>
+
+    <button class="list"><a href="productsm.html">Products List</a></button>
+
+    <div class="form-container">
+        <h1>New Product On MBR</h1>
+        <form id="dataForm">
+            <label for="item_name">Item Name:</label>
+            <input type="text" id="item_name" name="item_name" required>
+            
+            <label for="cost">Cost of Item:</label>
+            <input type="number" id="cost" name="cost" required>
+            
+            <button type="submit" id="submitButton">
+                Submit
+                <div class="spinner" id="spinner"></div>
+            </button>
+        </form>
+        <div id="responseMessage"></div>
+    </div>
+
+ 
+
+    <!-- MWISHO HAPA -->
+
+
+    <div class="bottom-navbar">
+        <a href="reports1.html" class="nav-item" id="nav-reports1" style="background-color: #0d035a;">
+            <i class="fa-solid fa-book-open-reader"></i>
+        </a>
+        <a href="reports2.html" class="nav-item" id="nav-reports2" style="background-color: #0d035a;">
+            <i class="fa-solid fa-chart-simple"></i>
+        </a>
+        <a href="add.html" class="add-button" id="nav-add" style="border: 5px solid #0d035a;"><i class="fa-solid fa-plus"></i></a>
+        <a href="dd-products.html" class="nav-item" id="nav-dd-products" style="background-color: #0d035a;">
+            <i class="fa-solid fa-shop"></i>
+        </a>
+        <a href="hot.html" class="nav-item" id="nav-hot" style="background-color: #0d035a;">
+            <i class="fa-solid fa-mug-hot"></i>
+        </a>
+    </div>
+
+    <footer>
+        <p>Developed by <a href="https://www.asyro.pro/technology" target="_blank">Asyro</a>. All rights reserved &copy; <span id="currentYear"></span></p>
+    </footer>
+    
+    <script>
+        // Set the current year dynamically
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+    </script>
+
+    <script>
+        // Highlight the active navigation item based on the current URL hash or page
+        const currentPath = window.location.hash || window.location.pathname;
+
+        const navItems = {
+            "#reports1.html": "nav-reports1",
+            "#reports2.html": "nav-reports2",
+            "#add.html": "nav-add",
+            "#dd-products.html": "nav-dd-products",
+            "#hot.html": "nav-hot"
+        };
+
+        Object.keys(navItems).forEach(key => {
+            const navElement = document.getElementById(navItems[key]);
+            if (currentPath.includes(key)) {
+                navElement.classList.add('active');
+            } else {
+                navElement.classList.remove('active');
+            }
+        });
+
+
+
+
+
+
+        // FUTA HAPA
+
+        document.getElementById("dataForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const itemName = document.getElementById("item_name").value;
+            const cost = document.getElementById("cost").value;
+            const submitButton = document.getElementById("submitButton");
+            const spinner = document.getElementById("spinner");
+            const responseMessage = document.getElementById("responseMessage");
+
+            spinner.style.display = "inline-block";
+            submitButton.disabled = true;
+
+            try {
+                const response = await fetch("https://script.google.com/macros/s/AKfycbwQ0aJAVEjYjyxYnRIqnjPttRdFqa-e4beG52fGTP43e8yLR-fSBGEYgKdUpWlsppoT/exec", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: `item_name=${encodeURIComponent(itemName)}&cost=${encodeURIComponent(cost)}`
+                });
+
+                const text = await response.text();
+                responseMessage.className = "success";
+                responseMessage.textContent = "Woow!! New Product Added";
+
+                // Reset form inputs
+                document.getElementById("dataForm").reset();
+            } catch (error) {
+                responseMessage.className = "error";
+                responseMessage.textContent = "Error: " + error.message;
+            } finally {
+                spinner.style.display = "none";
+                submitButton.disabled = false;
+
+                responseMessage.style.display = "block";
+                setTimeout(() => {
+                    responseMessage.style.display = "none";
+                }, 4000);
+            }
+        });
+
+    </script>
+
+</body>
+</html>

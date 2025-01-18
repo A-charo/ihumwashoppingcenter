@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ready Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+    #dailyRevenue, #dailyQuantity, #weeklyRevenue, #weeklyQuantity, #monthlyRevenue, #monthlyQuantity, #yearlyRevenue, #yearlyQuantity {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin-top: 83px;
+            margin-bottom: 71px;
+        }
+
+        /* Navigation Bar */
+        .bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #0489d1;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            
+        }
+
+        .nav-item {
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-item.active {
+            background-color: #0d035a;
+            color: white;
+        }
+
+        .nav-item:hover {
+            background-color: #0d035a;
+            box-shadow: 0 9px rgb(255, 174, 0);
+        }
+
+        .nav-item:active {
+            background-color: #0d035a;
+            transform: translateY(4px);
+            box-shadow: 0 7px rgba(201, 148, 1, 0.9);
+        }
+
+        .add-button {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            color: #0d035a;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            margin-top: -30px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .add-button:active {
+            background-color: #0d035a;
+            transform: translateY(4px);
+            box-shadow: 0 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .add-button:hover {
+            background-color: #0d035a;
+            box-shadow: 0 5px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+
+
+        /* BADILI HAPA HADI MBISHO */
+
+/* Spinner Styles */
+.spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: 1000;
+        }
+
+        .spinner div {
+            width: 20px;
+            height: 20px;
+            margin: 5px;
+            background-color: #0d035a;
+            border-radius: 50%;
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+
+        .spinner div:nth-child(2) {
+            background-color: #fff;
+            animation-delay: -0.3s;
+        }
+
+        .spinner div:nth-child(3) {
+            background-color: #fd9500;
+            animation-delay: -0.6s;
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% {
+                transform: scale(0);
+            }
+            40% {
+                transform: scale(1);
+            }
+        }
+        .tracing{
+            position: fixed; /* Fixes the navbar to the top */
+            top: 0px; /* Ensures it sticks to the top */
+            z-index: 1000;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            background-color: #026fb8;
+            left: 0;
+        }
+        .tracing h1{
+            text-align: center;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .sections{
+            padding: 25px;
+            background-color: #ece8e8;
+            border-radius: 10px;
+            
+        }
+
+        canvas {
+            /* Default size for mobile */
+            width: 90%;
+            max-width: 400px;
+            height: 47%;
+            max-height: 200px;
+        }
+
+        /* Adjust size for larger screens */
+        @media (min-width: 768px) {
+            canvas {
+                width: 60%;
+                max-width: 600px;
+                
+                height: 47%;
+            max-height: 200px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            canvas {
+                width: 40%;
+                max-width: 800px;
+                
+                height: 47%;
+            max-height: 200px;
+            }
+        }
+
+         
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    footer a {
+      color: #fd9500;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    </style>
+</head>
+<body>
+
+    <div class="main">
+
+        <!-- BADILI HAPA HADI MWISHO -->
+
+
+ <!-- Spinner -->
+ <div class="spinner" id="spinner">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+  <div class="tracing"><h1>MBR TRACING</h1></div>
+
+<!-- Daily Sales Section -->
+ <div class="sections">
+<h2>Daily Sales</h2>
+<p id="dailyRevenue"><strong>Total Revenue Today:</strong> 0.00 TZS</p>
+<p id="dailyQuantity"><strong>Total Quantity Sold Today:</strong> 0</p>
+<div class="Daily_sales" style="background-color: #eff5fa; border-radius: 10px;border: 2px solid #026fb8;">
+<canvas id="dailyChart"></canvas>
+</div>
+
+<!-- Weekly Sales Section -->
+<h2>Weekly Sales</h2>
+<p id="weeklyRevenue"><strong>Total Revenue This Week:</strong> 0.00 TZS</p>
+<p id="weeklyQuantity"><strong>Total Quantity Sold This Week:</strong> 0</p>
+<div class="weeklyQuantity" style="background-color: #ffff; border-radius: 10px;border: 2px solid #b8025d;">
+<canvas id="weeklyChart"></canvas>
+</div>
+
+<!-- Monthly Sales Section -->
+<h2>Monthly Sales</h2>
+<p id="monthlyRevenue"><strong>Total Revenue This Month:</strong> 0.00 TZS</p>
+<p id="monthlyQuantity"><strong>Total Quantity Sold This Month:</strong> 0</p>
+<div class="monthlyQuantity" style="background-color: #ffff; border-radius: 10px;border: 2px solid #2002b8;">
+<canvas id="monthlyChart"></canvas>
+</div>
+
+<!-- Yearly Sales Section -->
+<h2>Yearly Sales</h2>
+<p id="yearlyRevenue"><strong>Total Revenue This Year:</strong> 0.00 TZS</p>
+<p id="yearlyQuantity"><strong>Total Quantity Sold This Year:</strong> 0</p>
+<div class="yearlyQuantity" style="background-color: #ffff; border-radius: 10px;border: 2px solid #07c700;">
+<canvas id="yearlyChart"></canvas>
+</div>
+</div>
+
+
+    <!-- MWISHO HAPA -->
+
+    <footer>
+        <p>Developed by <a href="https://www.asyro.pro/technology" target="_blank">Asyro</a>. All rights reserved &copy; <span id="currentYear"></span></p>
+    </footer>
+    
+    <script>
+        // Set the current year dynamically
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+    </script>
+
+
+    <div class="bottom-navbar">
+        <a href="reports1.html" class="nav-item" id="nav-reports1" style="background-color: #0d035a;">
+            <i class="fa-solid fa-book-open-reader"></i>
+        </a>
+        <a href="reports2.html" class="nav-item" id="nav-reports2" style="background-color: #0d035a;">
+            <i class="fa-solid fa-chart-simple"></i>
+        </a>
+        <a href="add.html" class="add-button" id="nav-add" style="border: 5px solid #0d035a;"><i class="fa-solid fa-plus"></i></a>
+        <a href="dd-products.html" class="nav-item" id="nav-dd-products" style="background-color: #0d035a;">
+            <i class="fa-solid fa-shop"></i>
+        </a>
+        <a href="hot.html" class="nav-item" id="nav-hot" style="background-color: #0d035a;">
+            <i class="fa-solid fa-mug-hot"></i>
+        </a>
+    </div>
+
+    <script>
+        // Highlight the active navigation item based on the current URL hash or page
+        const currentPath = window.location.hash || window.location.pathname;
+
+        const navItems = {
+            "#reports1.html": "nav-reports1",
+            "#reports2.html": "nav-reports2",
+            "#add.html": "nav-add",
+            "#dd-products.html": "nav-dd-products",
+            "#hot.html": "nav-hot"
+        };
+
+        Object.keys(navItems).forEach(key => {
+            const navElement = document.getElementById(navItems[key]);
+            if (currentPath.includes(key)) {
+                navElement.classList.add('active');
+            } else {
+                navElement.classList.remove('active');
+            }
+        });
+
+
+
+
+
+
+        // FUTA HAPA
+
+
+
+        const SHEET_ID = "1vIWLOORGRGeypJLF1aJXwTdZri__rXmaEHhrguFQ65s";
+        const API_KEY = "AIzaSyDIw6pHVQwrpv1TjkcNsxU1K8ulixnD5QM";
+        const SHEET_NAME = "Sheet1";
+
+        const endpoint = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
+
+        const spinner = document.getElementById('spinner');
+
+        fetch(endpoint)
+            .then(response => response.json())
+            .then(data => {
+                spinner.style.display = 'none';
+
+                const rows = data.values.slice(1); // Skip the header row
+                const today = new Date();
+                const todayDateOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                const yesterdayDateOnly = new Date(todayDateOnly);
+                yesterdayDateOnly.setDate(todayDateOnly.getDate() - 1);
+
+                let totalRevenueToday = 0;
+                let totalQuantityToday = 0;
+                let totalRevenueYesterday = 0;
+                let totalQuantityYesterday = 0;
+                let totalRevenueOtherDays = 0;
+                let totalQuantityOtherDays = 0;
+
+                let totalRevenueWeek = 0;
+                let totalQuantityWeek = 0;
+
+                let totalRevenueMonth = 0;
+                let totalQuantityMonth = 0;
+
+                let totalRevenueYear = 0;
+                let totalQuantityYear = 0;
+
+                const weeklyData = Array(7).fill(0);
+                const monthlyData = Array(12).fill(0);
+                const yearlyData = {};
+
+                rows.forEach(row => {
+                    const saleDate = new Date(row[3]); // Column D for date
+                    const salePrice = parseFloat(row[1]) || 0; // Column B for price
+                    const saleQuantity = parseFloat(row[2]) || 0; // Column C for quantity
+                    const totalSalePrice = salePrice * saleQuantity;
+
+                    // Daily Totals
+                    if (saleDate.toDateString() === today.toDateString()) {
+                        totalRevenueToday += totalSalePrice;
+                        totalQuantityToday += saleQuantity;
+                    } else if (saleDate.toDateString() === yesterdayDateOnly.toDateString()) {
+                        totalRevenueYesterday += totalSalePrice;
+                        totalQuantityYesterday += saleQuantity;
+                    } else {
+                        totalRevenueOtherDays += totalSalePrice;
+                        totalQuantityOtherDays += saleQuantity;
+                    }
+
+                    // Weekly Totals
+                    const startOfWeek = new Date(today);
+                    startOfWeek.setDate(today.getDate() - today.getDay());
+                    const endOfWeek = new Date(startOfWeek);
+                    endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+                    if (saleDate >= startOfWeek && saleDate <= endOfWeek) {
+                        const dayIndex = saleDate.getDay();
+                        weeklyData[dayIndex] += totalSalePrice;
+                        totalRevenueWeek += totalSalePrice;
+                        totalQuantityWeek += saleQuantity;
+                    }
+
+                    // Monthly Totals
+                    if (
+                        saleDate.getFullYear() === today.getFullYear() &&
+                        saleDate.getMonth() === today.getMonth()
+                    ) {
+                        monthlyData[saleDate.getMonth()] += totalSalePrice;
+                        totalRevenueMonth += totalSalePrice;
+                        totalQuantityMonth += saleQuantity;
+                    }
+
+                    // Yearly Totals
+                    const year = saleDate.getFullYear();
+                    if (!yearlyData[year]) yearlyData[year] = 0;
+                    yearlyData[year] += totalSalePrice;
+                    if (saleDate.getFullYear() === today.getFullYear()) {
+                        totalRevenueYear += totalSalePrice;
+                        totalQuantityYear += saleQuantity;
+                    }
+                });
+
+                // Update text
+                document.querySelector('#dailyRevenue').innerHTML = `
+                    <strong>Total Revenue Today:</strong> ${totalRevenueToday.toFixed(2)} TZS`;
+                document.querySelector('#dailyQuantity').innerHTML = `
+                    <strong>Total Quantity Sold Today:</strong> ${totalQuantityToday} `;
+                document.querySelector('#weeklyRevenue').innerHTML = `<strong>Total Revenue This Week:</strong> ${totalRevenueWeek.toFixed(2)} TZS`;
+                document.querySelector('#weeklyQuantity').innerHTML = `<strong>Total Quantity Sold This Week:</strong> ${totalQuantityWeek}`;
+                document.querySelector('#monthlyRevenue').innerHTML = `<strong>Total Revenue This Month:</strong> ${totalRevenueMonth.toFixed(2)} TZS`;
+                document.querySelector('#monthlyQuantity').innerHTML = `<strong>Total Quantity Sold This Month:</strong> ${totalQuantityMonth}`;
+                document.querySelector('#yearlyRevenue').innerHTML = `<strong>Total Revenue This Year:</strong> ${totalRevenueYear.toFixed(2)} TZS`;
+                document.querySelector('#yearlyQuantity').innerHTML = `<strong>Total Quantity Sold This Year:</strong> ${totalQuantityYear}`;
+
+                // Charts
+                new Chart(document.getElementById('dailyChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: ["Today", "Yesterday", "Other Days"],
+                        datasets: [
+                            {
+                                label: "Revenue",
+                                data: [totalRevenueToday, totalRevenueYesterday, totalRevenueOtherDays],
+                                backgroundColor: "rgba(75,192,192,0.4)",
+                                borderColor: "rgba(75,192,192,1)",
+                                borderWidth: 1
+                            },
+                            {
+                                label: "Quantity",
+                                data: [totalQuantityToday, totalQuantityYesterday, totalQuantityOtherDays],
+                                backgroundColor: "rgba(255,99,132,0.4)",
+                                borderColor: "rgba(255,99,132,1)",
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+                new Chart(document.getElementById('weeklyChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+                        datasets: [{
+                            label: "Weekly Revenue",
+                            data: weeklyData,
+                            backgroundColor: "rgba(54,162,235,0.4)",
+                            borderColor: "rgba(54,162,235,1)"
+                        }]
+                    }
+                });
+
+                new Chart(document.getElementById('monthlyChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                        datasets: [{
+                            label: "Monthly Revenue",
+                            data: monthlyData,
+                            backgroundColor: "rgba(255,206,86,0.4)",
+                            borderColor: "rgba(255,206,86,1)"
+                        }]
+                    }
+                });
+
+                new Chart(document.getElementById('yearlyChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(yearlyData),
+                        datasets: [{
+                            label: "Yearly Revenue",
+                            data: Object.values(yearlyData),
+                            backgroundColor: "rgba(255,99,132,0.4)",
+                            borderColor: "rgba(255,99,132,1)"
+                        }]
+                    }
+                });
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                spinner.innerHTML = "<p>No Internet Connection.</P>";
+            });
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBR App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin-top: 60px;
+            margin-bottom: 71px;
+        }
+
+        /* Navigation Bar */
+        .bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #0489d1;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            
+        }
+
+        .nav-item {
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-item.active {
+            background-color: #0d035a;
+            color: white;
+        }
+
+        .nav-item:hover {
+            background-color: #0d035a;
+            box-shadow: 0 9px rgb(255, 174, 0);
+        }
+
+        .nav-item:active {
+            background-color: #0d035a;
+            transform: translateY(4px);
+            box-shadow: 0 7px rgba(201, 148, 1, 0.9);
+        }
+
+        .add-button {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            color: #0d035a;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            margin-top: -30px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .add-button:active {
+            background-color: #0d035a;
+            transform: translateY(4px);
+            box-shadow: 0 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .add-button:hover {
+            background-color: #0d035a;
+            box-shadow: 0 5px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+
+
+        /* BADILI HAPA HADI MBISHO */
+
+/* Navigation Bar */
+.nav {
+            position: fixed; /* Fixes the navbar to the top */
+            top: 0; /* Ensures it sticks to the top */
+            left: 0;
+            width: 100%; /* Ensures it spans the entire width */
+            z-index: 1000; /* Ensures it stays above other elements */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #026fb8; /* Primary color */
+            color: white;
+            padding: 10px 20px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+        }
+
+
+        .logo h2 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header h4 {
+            font-size: 15px;
+            margin-right: 35px;
+            padding-left: 10px;
+            padding-left: 10px;
+        }
+
+        /* Products section */
+                .products_section {
+            overflow: auto;
+            max-width: 100%;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+
+        .products table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .products th, .products td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .products th {
+            background-color: #026fb8;
+            color: white;
+        }
+
+        .products h2 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #575656;
+        }
+
+        /* Footer */
+        footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    footer a {
+      color: #fd9500;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+
+        /* Spinner */
+        #loading-spinner {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            font-weight: bold;
+            color: #026fb8;
+            display: none; /* Initially hidden */
+        }
+
+        /* Show More / Hide More Button */
+        .show-more-button {
+            background-color: #026fb8;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .show-more-button:hover {
+            background-color: #024f89;
+        }
+        .float{
+	position:fixed;
+	width:50px;
+	height:50px;
+	top: 90px;
+	right:10px;
+	background-color: #0d035a;
+	color:#FFF;
+    border: 3px solid #fd9500;
+	text-align:center;
+    border-radius: 50%;
+	box-shadow: 2px 2px 3px #999;
+}
+
+
+.fa-calculator{
+	margin-top:11px;
+    font-size: 28px;
+}
+    </style>
+</head>
+<body>
+
+    <div class="main">
+
+        <!-- BADILI HAPA HADI MWISHO -->
+
+
+        <!-- Loading Spinner -->
+    <div id="loading-spinner">
+        <p>Loading...</p>
+    </div>
+
+    <nav class="nav">
+        <div class="logo">
+            <h2>MBR</h2>
+        </div>
+        <div class="header">
+            <h4>Piga <a href="tel:0618148001" style="text-decoration: none; color: white; font-size: 25px;"><i class="fa-solid fa-phone-volume"></i></a>
+            </h4>
+        </div>
+    </nav>
+
+    <a href="calculator.html" class="float">
+        <i class="fa-solid fa-calculator"></i>
+        </a>
+
+    <!-- Sales Report Sections -->
+    <section class="products_section" id="today-section">
+        <div class="products">
+            <h2>Today's Sales Report</h2>
+            <div id="today-sales-summary">
+                <!-- Summary data will be inserted here -->
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Sold</th>
+                        <th>Price of Item</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Date of Sale</th>
+                    </tr>
+                </thead>
+                <tbody id="today-sales-list">
+                    <!-- Data will be populated dynamically -->
+                </tbody>
+            </table>
+            <div id="today-sales-totals">
+                <p><strong>Total Quantity:</strong> <span id="today-total-quantity">0</span></p>
+                <p><strong>Total Sales Price:</strong> <span id="today-total-sales">0.00</span></p>
+            </div>
+            <button id="today-show-more" class="show-more-button">Show More</button>
+        </div>
+    </section>
+
+    <section class="products_section" id="yesterday-section">
+        <div class="products">
+            <h2>Yesterday's Sales Report</h2>
+            <div id="yesterday-sales-summary">
+                <!-- Summary data will be inserted here -->
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Sold</th>
+                        <th>Price of Item</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Date of Sale</th>
+                    </tr>
+                </thead>
+                <tbody id="yesterday-sales-list">
+                    <!-- Data will be populated dynamically -->
+                </tbody>
+            </table>
+            <div id="yesterday-sales-totals">
+                <p><strong>Total Quantity:</strong> <span id="yesterday-total-quantity">0</span></p>
+                <p><strong>Total Sales Price:</strong> <span id="yesterday-total-sales">0.00</span></p>
+            </div>
+            <button id="yesterday-show-more" class="show-more-button">Show More</button>
+        </div>
+    </section>
+
+    <section class="products_section" id="week-section">
+        <div class="products">
+            <h2>This Week's Sales Report</h2>
+            <div id="week-sales-summary">
+                <!-- Summary data will be inserted here -->
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Sold</th>
+                        <th>Price of Item</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Date of Sale</th>
+                    </tr>
+                </thead>
+                <tbody id="week-sales-list">
+                    <!-- Data will be populated dynamically -->
+                </tbody>
+            </table>
+            <div id="week-sales-totals">
+                <p><strong>Total Quantity:</strong> <span id="week-total-quantity">0</span></p>
+                <p><strong>Total Sales Price:</strong> <span id="week-total-sales">0.00</span></p>
+            </div>
+            <button id="week-show-more" class="show-more-button">Show More</button>
+        </div>
+    </section>
+
+    <section class="products_section" id="last-week-section">
+        <div class="products">
+            <h2>Last Week's Sales Report</h2>
+            <div id="last-week-sales-summary">
+                <!-- Summary data will be inserted here -->
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Sold</th>
+                        <th>Price of Item</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Date of Sale</th>
+                    </tr>
+                </thead>
+                <tbody id="last-week-sales-list">
+                    <!-- Data will be populated dynamically -->
+                </tbody>
+            </table>
+            <div id="last-week-sales-totals">
+                <p><strong>Total Quantity:</strong> <span id="last-week-total-quantity">0</span></p>
+                <p><strong>Total Sales Price:</strong> <span id="last-week-total-sales">0.00</span></p>
+            </div>
+            <button id="last-week-show-more" class="show-more-button">Show More</button>
+        </div>
+    </section>
+
+    <section class="products_section" id="month-section">
+        <div class="products">
+            <h2>This Month's Sales Report</h2>
+            <div id="month-sales-summary">
+                <!-- Summary data will be inserted here -->
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Sold</th>
+                        <th>Price of Item</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Date of Sale</th>
+                    </tr>
+                </thead>
+                <tbody id="month-sales-list">
+                    <!-- Data will be populated dynamically -->
+                </tbody>
+            </table>
+            <div id="month-sales-totals">
+                <p><strong>Total Quantity:</strong> <span id="month-total-quantity">0</span></p>
+                <p><strong>Total Sales Price:</strong> <span id="month-total-sales">0.00</span></p>
+            </div>
+            <button id="month-show-more" class="show-more-button">Show More</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>Developed by <a href="https://www.asyro.pro/technology" target="_blank">Asyro</a>. All rights reserved &copy; <span id="currentYear"></span></p>
+    </footer>
+    
+    <script>
+        // Set the current year dynamically
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+    </script>
+
+
+    <!-- MWISHO HAPA -->
+
+
+    <div class="bottom-navbar">
+        <a href="reports1.html" class="nav-item" id="nav-reports1" style="background-color: #0d035a;">
+            <i class="fa-solid fa-book-open-reader"></i>
+        </a>
+        <a href="reports2.html" class="nav-item" id="nav-reports2" style="background-color: #0d035a;">
+            <i class="fa-solid fa-chart-simple"></i>
+        </a>
+        <a href="add.html" class="add-button" id="nav-add" style="border: 5px solid #0d035a;"><i class="fa-solid fa-plus"></i></a>
+        <a href="dd-products.html" class="nav-item" id="nav-dd-products" style="background-color: #0d035a;">
+            <i class="fa-solid fa-shop"></i>
+        </a>
+        <a href="hot.html" class="nav-item" id="nav-hot" style="background-color: #0d035a;">
+            <i class="fa-solid fa-mug-hot"></i>
+        </a>
+    </div>
+
+    <script>
+        // Highlight the active navigation item based on the current URL hash or page
+        const currentPath = window.location.hash || window.location.pathname;
+
+        const navItems = {
+            "#reports1.html": "nav-reports1",
+            "#reports2.html": "nav-reports2",
+            "#add.html": "nav-add",
+            "#dd-products.html": "nav-dd-products",
+            "#hot.html": "nav-hot"
+        };
+
+        Object.keys(navItems).forEach(key => {
+            const navElement = document.getElementById(navItems[key]);
+            if (currentPath.includes(key)) {
+                navElement.classList.add('active');
+            } else {
+                navElement.classList.remove('active');
+            }
+        });
+
+
+
+
+
+
+        // FUTA HAPA
+
+
+
+        const SHEET_ID = "1vIWLOORGRGeypJLF1aJXwTdZri__rXmaEHhrguFQ65s";
+const API_KEY = "AIzaSyDIw6pHVQwrpv1TjkcNsxU1K8ulixnD5QM";
+const SHEET_NAME = "Sheet1";
+const API_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
+
+let todayData = [];
+let yesterdayData = [];
+let weekData = [];
+let lastWeekData = [];
+let monthData = [];
+
+// Fetch data from Google Sheets
+async function fetchData() {
+    const spinner = document.getElementById("loading-spinner");
+    spinner.style.display = "block";
+
+    try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+
+        const salesData = data.values.slice(1); // Skip the header row
+        todayData = sortDataByDate(filterDataByDate(salesData, 'today'));
+        yesterdayData = sortDataByDate(filterDataByDate(salesData, 'yesterday'));
+        weekData = sortDataByDate(filterDataByDate(salesData, 'week'));
+        lastWeekData = sortDataByDate(filterDataByDate(salesData, 'last-week'));
+        monthData = sortDataByDate(filterDataByDate(salesData, 'month'));
+
+        // Populate sections
+        fillSection('today', todayData);
+        fillSection('yesterday', yesterdayData);
+        fillSection('week', weekData);
+        fillSection('last-week', lastWeekData);
+        fillSection('month', monthData);
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    } finally {
+        spinner.style.display = "none";
+    }
+}
+
+// Sort data by date (new to old)
+function sortDataByDate(data) {
+    return data.sort((a, b) => new Date(b[3]) - new Date(a[3]));
+}
+
+// Populate table sections
+function fillSection(section, data) {
+    const list = document.getElementById(`${section}-sales-list`);
+    const totalQuantityElem = document.getElementById(`${section}-total-quantity`);
+    const totalSalesElem = document.getElementById(`${section}-total-sales`);
+    let totalQuantity = 0;
+    let totalSales = 0;
+
+    list.innerHTML = ''; // Reset the list for each section
+
+    // Display first 4 items by default
+    const initialData = data.slice(0, 4);
+    initialData.forEach(row => {
+        const [item, price, quantity, date] = row;
+        const total = parseFloat(price) * parseInt(quantity);
+        totalQuantity += parseInt(quantity);
+        totalSales += total;
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${item}</td>
+            <td>${parseFloat(price).toFixed(2)}</td>
+            <td>${quantity}</td>
+            <td>${total.toFixed(2)}</td>
+            <td>${date}</td>
+        `;
+        list.appendChild(tr);
+    });
+
+    // Update totals for first 4 items
+    totalQuantityElem.textContent = totalQuantity;
+    totalSalesElem.textContent = totalSales.toFixed(2);
+
+    // Show "Show More" button if more items exist
+    const showMoreButton = document.getElementById(`${section}-show-more`);
+    if (data.length > 4) {
+        showMoreButton.style.display = "block";
+        showMoreButton.onclick = function() {
+            if (showMoreButton.textContent === "Show More") {
+                showMoreButton.textContent = "Hide More";
+                fillRemainingItems(section, data);
+            } else {
+                showMoreButton.textContent = "Show More";
+                removeExtraItems(section, data);
+            }
+        };
+    } else {
+        showMoreButton.style.display = "none"; // Hide if no more items
+    }
+
+    // Update totals for all items
+    totalQuantity = 0;
+    totalSales = 0;
+    data.forEach(row => {
+        const [item, price, quantity, date] = row;
+        const total = parseFloat(price) * parseInt(quantity);
+        totalQuantity += parseInt(quantity);
+        totalSales += total;
+    });
+
+    // Update the totals after "Show More" action
+    totalQuantityElem.textContent = totalQuantity;
+    totalSalesElem.textContent = totalSales.toFixed(2);
+}
+
+// Show remaining items when "Show More" is clicked
+function fillRemainingItems(section, data) {
+    const list = document.getElementById(`${section}-sales-list`);
+    let totalQuantity = 0;
+    let totalSales = 0;
+
+    data.slice(4).forEach(row => {
+        const [item, price, quantity, date] = row;
+        const total = parseFloat(price) * parseInt(quantity);
+        totalQuantity += parseInt(quantity);
+        totalSales += total;
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${item}</td>
+            <td>${parseFloat(price).toFixed(2)}</td>
+            <td>${quantity}</td>
+            <td>${total.toFixed(2)}</td>
+            <td>${date}</td>
+        `;
+        list.appendChild(tr);
+    });
+
+    // Update totals after showing remaining items
+    const totalQuantityElem = document.getElementById(`${section}-total-quantity`);
+    const totalSalesElem = document.getElementById(`${section}-total-sales`);
+    totalQuantityElem.textContent = totalQuantity;
+    totalSalesElem.textContent = totalSales.toFixed(2);
+}
+
+// Remove extra items when "Hide More" is clicked
+function removeExtraItems(section, data) {
+    const list = document.getElementById(`${section}-sales-list`);
+    const rows = list.querySelectorAll('tr');
+    rows.forEach((row, index) => {
+        if (index >= 4) {
+            row.remove();
+        }
+    });
+
+    // Reset totals to the first 4 items
+    let totalQuantity = 0;
+    let totalSales = 0;
+    data.slice(0, 4).forEach(row => {
+        const [item, price, quantity, date] = row;
+        const total = parseFloat(price) * parseInt(quantity);
+        totalQuantity += parseInt(quantity);
+        totalSales += total;
+    });
+
+    const totalQuantityElem = document.getElementById(`${section}-total-quantity`);
+    const totalSalesElem = document.getElementById(`${section}-total-sales`);
+    totalQuantityElem.textContent = totalQuantity;
+    totalSalesElem.textContent = totalSales.toFixed(2);
+}
+
+// Filter data by date
+function filterDataByDate(data, section) {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+    const currentDay = currentDate.getDate();
+    const currentWeek = getWeekNumber(currentDate);
+
+    function getWeekNumber(date) {
+        const startDate = new Date(date.getFullYear(), 0, 1);
+        const diff = date - startDate;
+        return Math.ceil((diff / 86400000 + startDate.getDay() + 1) / 7);
+    }
+
+    switch (section) {
+        case 'today':
+            return data.filter(row => new Date(row[3]).toDateString() === currentDate.toDateString());
+        case 'yesterday':
+            const yesterdayDate = new Date(currentDate);
+            yesterdayDate.setDate(currentDay - 1);
+            return data.filter(row => new Date(row[3]).toDateString() === yesterdayDate.toDateString());
+        case 'week':
+            const weekData = data.filter(row => getWeekNumber(new Date(row[3])) === currentWeek && new Date(row[3]).getFullYear() === currentYear);
+            console.log("Filtered week data:", weekData);  // For debugging
+            return weekData;
+        case 'last-week':
+            return data.filter(row => getWeekNumber(new Date(row[3])) === currentWeek - 1 && new Date(row[3]).getFullYear() === currentYear);
+        case 'month':
+            return data.filter(row => new Date(row[3]).getMonth() === currentMonth && new Date(row[3]).getFullYear() === currentYear);
+        default:
+            return [];
+    }
+}
+
+// Fetch data when the page loads
+fetchData();
+        
+
+
+    </script>
+
+</body>
+</html>

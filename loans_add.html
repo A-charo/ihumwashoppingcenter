@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loan Submission Form</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+ body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin-top: 95px;
+            margin-bottom: 71px;
+        }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #0288d1;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0267a1;
+    }
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-left: 10px;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    .hidden {
+      display: none;
+    }
+    .success, .error {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
+    }
+
+    .float{
+	position:fixed;
+	width:50px;
+	height:50px;
+	top: 90px;
+	left:10px;
+	background-color: #0d035a;
+	color:#FFF;
+    border: 3px solid #fd9500;
+	text-align:center;
+    border-radius: 50%;
+	box-shadow: 2px 2px 3px #999;
+}
+
+
+.fa-circle-left{
+	margin-top:11px;
+    font-size: 28px;
+}
+        /* Navigation Bar */
+        .nav {
+            position: fixed; /* Fixes the navbar to the top */
+            top: 0; /* Ensures it sticks to the top */
+            left: 0;
+            width: 100%; /* Ensures it spans the entire width */
+            z-index: 1000; /* Ensures it stays above other elements */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #026fb8; /* Primary color */
+            color: white;
+            padding: 10px 20px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+        }
+
+
+        .logo h2 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header h4 {
+            font-size: 15px;
+            margin-right: 35px;
+            padding-left: 10px;
+            padding-left: 10px;
+        }
+
+        
+  </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="logo">
+            <h2>MBR</h2>
+        </div>
+        <div class="header">
+            <h4>Piga <a href="tel:0618148001" style="text-decoration: none; color: white; font-size: 25px;"><i class="fa-solid fa-phone-volume"></i></a></h4>
+        </div>
+    </nav>
+
+    <a href="loans.html" class="float">
+        <i class="fa-solid fa-circle-left"></i>
+        </a>
+
+  <div class="container">
+    <h1>Loan Submission Form</h1>
+    <form id="loanForm">
+      <label for="customer_name">Customer Name</label>
+      <input type="text" id="customer_name" name="customer_name" required>
+
+      <label for="item_name">Item Name</label>
+      <input type="text" id="item_name" name="item_name" required>
+
+      <label for="total_loan_price">Total Loan Price</label>
+      <input type="number" id="total_loan_price" name="total_loan_price" required>
+
+      <label for="loan_status">Loan Status</label>
+      <select id="loan_status" name="loan_status" required>
+        <option value="Paid">Paid</option>
+        <option value="Not Paid">Not Paid</option>
+      </select>
+
+      <button type="submit" id="submitButton">
+        Submit
+        <div class="spinner hidden" id="spinner"></div>
+      </button>
+      <div class="success" id="successMessage"></div>
+      <div class="error" id="errorMessage"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('loanForm');
+    const submitButton = document.getElementById('submitButton');
+    const spinner = document.getElementById('spinner');
+    const successMessage = document.getElementById('successMessage');
+    const errorMessage = document.getElementById('errorMessage');
+
+    // Replace with your Google Apps Script URL
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyym3xEPWqcwgLxhQSu79PxvQ9sei2zwRP6Xr5vO5kIc8RekgzDDmgWSRFzvilnn53N/exec';
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault(); // Prevent form from refreshing the page
+
+      // Clear previous messages
+      successMessage.textContent = '';
+      errorMessage.textContent = '';
+
+      // Show spinner and disable the button
+      spinner.classList.remove('hidden');
+      submitButton.disabled = true;
+
+      // Collect form data
+      const formData = new FormData(form);
+
+      try {
+        // Send data to the Apps Script URL
+        const response = await fetch(scriptURL, {
+          method: 'POST',
+          body: formData,
+        });
+
+        // Parse response
+        const result = await response.text();
+        if (response.ok) {
+          successMessage.textContent = result; // Show success message
+          form.reset(); // Clear the form
+        } else {
+          throw new Error(result);
+        }
+      } catch (error) {
+        errorMessage.textContent = `Submission failed: ${error.message}`; // Show error message
+      } finally {
+        // Hide spinner and enable the button
+        spinner.classList.add('hidden');
+        submitButton.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

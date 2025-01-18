@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+        .calculator {
+            background: #000119;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            position: relative;
+        }
+        .display {
+            width: 100%;
+            height: 50px;
+            background: #f0f0f0;
+            text-align: right;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 2em;
+            border: none;
+            font-weight: bold;
+            color: black;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            height: 50px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            background: #026fb8;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #005b9a;
+        }
+        button.clear {
+            background: #fd9500;
+        }
+        button.clear:hover {
+            background: #d87f00;
+        }
+        button.percent {
+            background: #0d035a;
+        }
+        button.percent:hover {
+            background: #000119;
+        }
+        button.delete {
+            background: #fd9500;
+        }
+        button.delete:hover {
+            background: #d87f00;
+        }
+        .watermark {
+          width: 20%;
+          margin-top: -35px;
+            position: absolute;
+            left: 15%;
+            transform: translateX(-50%);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        .float{
+	position:fixed;
+	width:50px;
+	height:50px;
+	top: 20px;
+	left:10px;
+	background-color: #0d035a;
+	color:#FFF;
+    border: 3px solid #fd9500;
+	text-align:center;
+    border-radius: 50%;
+	box-shadow: 2px 2px 3px #999;
+    z-index: 1000;
+}
+
+
+.fa-circle-left{
+	margin-top:11px;
+    font-size: 28px;
+}
+    </style>
+</head>
+<body>
+    
+    <a href="reports1.html" class="float">
+        <i class="fa-solid fa-circle-left"></i>
+        </a>
+
+    <div class="calculator">
+        <h4 style="color: white;">MBR CALCULATOR</h4>
+      <img src="https://i.ibb.co/dgM2m1y/logo-asyro.png" alt="Watermark" class="watermark">
+        <input type="text" class="display" id="display" disabled>
+        <div class="buttons">
+            <button onclick="appendValue('7')">7</button>
+            <button onclick="appendValue('8')">8</button>
+            <button onclick="appendValue('9')">9</button>
+            <button onclick="appendValue('/')">/</button>
+            <button onclick="appendValue('4')">4</button>
+            <button onclick="appendValue('5')">5</button>
+            <button onclick="appendValue('6')">6</button>
+            <button onclick="appendValue('*')">*</button>
+            <button onclick="appendValue('1')">1</button>
+            <button onclick="appendValue('2')">2</button>
+            <button onclick="appendValue('3')">3</button>
+            <button onclick="appendValue('-')">-</button>
+            <button onclick="appendValue('0')">0</button>
+            <button onclick="appendValue('.')">.</button>
+            <button onclick="calculate()">=</button>
+            <button onclick="appendValue('+')">+</button>
+            <button class="delete" onclick="deleteLast()">DEL</button>
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button class="percent" onclick="percent()">%</button>
+        </div>
+        
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+
+        function appendValue(value) {
+            display.value += value;
+        }
+
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        function deleteLast() {
+            display.value = display.value.slice(0, -1);
+        }
+
+        function calculate() {
+            try {
+                display.value = eval(display.value);
+            } catch {
+                display.value = 'Error';
+            }
+        }
+
+        function percent() {
+            try {
+                display.value = (parseFloat(display.value) / 100).toString();
+            } catch {
+                display.value = 'Error';
+            }
+        }
+    </script>
+</body>
+</html>

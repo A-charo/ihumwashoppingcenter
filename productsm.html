@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Edit</title>
+  <style>
+
+
+    h1 {
+      color: #0044cc;
+      text-align: center;
+      font-size: 2em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #0044cc;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .actions button {
+      margin-right: 5px;
+      padding: 8px 12px;
+      border: none;
+      background-color: #0044cc;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 0.9em;
+      position: relative;
+      display: inline-block;
+    }
+
+    .actions button:hover {
+      background-color: #003399;
+    }
+
+    .actions button:disabled {
+      background-color: #bbb;
+      cursor: not-allowed;
+    }
+
+    #formSection {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+
+    #formSection h2 {
+      color: #0044cc;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      border-color: #0044cc;
+      outline: none;
+    }
+
+    button[type="submit"], button[type="button"] {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+      position: relative;
+      display: inline-block;
+    }
+
+    button[type="submit"] {
+      background-color: #28a745;
+      color: #fff;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #218838;
+    }
+
+    button[type="button"] {
+      background-color: #dc3545;
+      color: #fff;
+    }
+
+    button[type="button"]:hover {
+      background-color: #c82333;
+    }
+
+    #message {
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    #message.success {
+      color: #155724;
+      background-color: #d4edda;
+      border-color: #c3e6cb;
+    }
+
+    #message.error {
+      color: #721c24;
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+    }
+
+    #loader {
+      display: none;
+      text-align: center;
+      font-size: 2em;
+      color: #0d035a;
+      font-weight: bold;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 4px solid transparent;
+      border-top: 4px solid #ffff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    
+/* Navigation Bar */
+.nav {
+            position: fixed; /* Fixes the navbar to the top */
+            top: 0; /* Ensures it sticks to the top */
+            left: 0;
+            width: 100%; /* Ensures it spans the entire width */
+            z-index: 1000; /* Ensures it stays above other elements */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #026fb8; /* Primary color */
+            color: white;
+            padding: 10px 20px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+        }
+
+
+        .logo h2 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header h4 {
+            font-size: 15px;
+            margin-right: 35px;
+            padding-left: 10px;
+            padding-left: 10px;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin-top: 92px;
+            margin-bottom: 71px;
+        }
+
+        /* Navigation Bar */
+        .bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #0489d1;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            
+        }
+
+        .nav-item {
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-item.active {
+            background-color: #0d035a;
+            color: white;
+        }
+
+        .nav-item:hover {
+            background-color: #0d035a;
+            box-shadow: 0 9px rgb(255, 174, 0);
+        }
+
+        .nav-item:active {
+            background-color: #0d035a;
+            transform: translateY(4px);
+            box-shadow: 0 7px rgba(201, 148, 1, 0.9);
+        }
+
+        .add-button {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            color: #0d035a;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            margin-top: -30px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .add-button:active {
+            background-color: #0d035a;
+            transform: translateY(4px);
+            box-shadow: 0 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .add-button:hover {
+            background-color: #0d035a;
+            box-shadow: 0 5px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+  </style>
+</head>
+<body>
+
+  <div class="main">
+
+  
+  <nav class="nav">
+    <div class="logo">
+        <h2>MBR</h2>
+    </div>
+    <div class="header">
+        <h4>Piga <a href="tel:0618148001" style="text-decoration: none; color: white; font-size: 25px;"><i class="fa-solid fa-phone-volume"></i></a>
+        </h4>
+    </div>
+</nav>
+  <h1 id="mainHeading">Product Management</h1>
+  <div id="message"></div>
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>Item Name</th>
+        <th>Cost</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div id="loader">Loading...</div>
+
+  <div id="formSection">
+    <h2 id="formTitle"></h2>
+    <form onsubmit="saveData(); return false;">
+      <label for="itemName">Item Name:</label>
+      <input type="text" id="itemName" required>
+      <br><br>
+      <label for="cost">Cost:</label>
+      <input type="number" id="cost" required>
+      <br><br>
+      <button type="submit" id="saveButton">
+        Save
+        <div class="spinner" id="saveSpinner" style="display: none;"></div>
+      </button>
+      <button type="button" onclick="closeForm()">Cancel</button>
+    </form>
+  </div>
+
+  
+  <div class="bottom-navbar">
+    <a href="reports1.html" class="nav-item" id="nav-reports1" style="background-color: #0d035a;">
+        <i class="fa-solid fa-book-open-reader"></i>
+    </a>
+    <a href="reports2.html" class="nav-item" id="nav-reports2" style="background-color: #0d035a;">
+        <i class="fa-solid fa-chart-simple"></i>
+    </a>
+    <a href="add.html" class="add-button" id="nav-add" style="border: 5px solid #0d035a;"><i class="fa-solid fa-plus"></i></a>
+    <a href="dd-products.html" class="nav-item" id="nav-dd-products" style="background-color: #0d035a;">
+        <i class="fa-solid fa-shop"></i>
+    </a>
+    <a href="hot.html" class="nav-item" id="nav-hot" style="background-color: #0d035a;">
+        <i class="fa-solid fa-mug-hot"></i>
+    </a>
+</div>
+
+  <script>
+
+       // Highlight the active navigation item based on the current URL hash or page
+       const currentPath = window.location.hash || window.location.pathname;
+
+const navItems = {
+    "#reports1.html": "nav-reports1",
+    "#reports2.html": "nav-reports2",
+    "#add.html": "nav-add",
+    "#dd-products.html": "nav-dd-products",
+    "#hot.html": "nav-hot"
+};
+
+Object.keys(navItems).forEach(key => {
+    const navElement = document.getElementById(navItems[key]);
+    if (currentPath.includes(key)) {
+        navElement.classList.add('active');
+    } else {
+        navElement.classList.remove('active');
+    }
+});
+
+
+
+
+    const SHEET_ID = "1vIWLOORGRGeypJLF1aJXwTdZri__rXmaEHhrguFQ65s";
+    const API_KEY = "AIzaSyDIw6pHVQwrpv1TjkcNsxU1K8ulixnD5QM";
+    const SHEET_NAME = "Sheet2";
+    const BASE_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}`;
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzRPhMUoJ5nQzm9A_a9HiCerslbKt-X6IXb37EVIQg6BatRpAWzVnEdIFzlK8wZ36cx/exec";
+
+    const dataTable = document.getElementById('dataTable');
+    const formSection = document.getElementById('formSection');
+    const itemNameInput = document.getElementById('itemName');
+    const costInput = document.getElementById('cost');
+    const message = document.getElementById('message');
+    const loader = document.getElementById('loader');
+    const mainHeading = document.getElementById('mainHeading');
+    const saveButton = document.getElementById('saveButton');
+    const saveSpinner = document.getElementById('saveSpinner');
+    let dataRows = []; // Store the rows from Google Sheets
+    let editIndex = null;
+
+    async function fetchData() {
+      loader.style.display = 'block';
+      try {
+        const response = await fetch(`${BASE_URL}?key=${API_KEY}`);
+        const result = await response.json();
+        dataRows = result.values.slice(1); // Skip header row
+        renderTable(dataRows.reverse()); // Show newest first in HTML
+        mainHeading.style.display = 'block';
+        dataTable.style.display = 'table';
+      } catch (error) {
+        showMessage('Error fetching data!', 'error');
+      } finally {
+        loader.style.display = 'none';
+      }
+    }
+
+    function renderTable(data) {
+      const tbody = dataTable.querySelector('tbody');
+      tbody.innerHTML = '';
+      data.forEach((row, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row[0]}</td>
+          <td>${row[1]}</td>
+          <td class="actions">
+            <button onclick="editData(${index}, '${row[0]}', '${row[1]}')">Edit</button>
+            <button onclick="deleteDataWithSpinner(${index})">
+              Delete
+              <div class="spinner" id="spinner" style="display: none;"></div>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openForm(title, index = null) {
+      document.getElementById('formTitle').textContent = title;
+      formSection.style.display = 'block';
+      mainHeading.style.display = 'none';
+      dataTable.style.display = 'none';
+      editIndex = index;
+    }
+
+    function closeForm() {
+      formSection.style.display = 'none';
+      mainHeading.style.display = 'block';
+      dataTable.style.display = 'table';
+      itemNameInput.value = '';
+      costInput.value = '';
+    }
+
+    async function saveData() {
+      saveButton.disabled = true;
+      saveSpinner.style.display = 'inline-block'; // Show spinner on Save button
+      loader.style.display = 'block';
+      const formData = new URLSearchParams();
+      formData.append('action', editIndex !== null ? 'update' : 'add');
+      formData.append('itemName', itemNameInput.value);
+      formData.append('cost', costInput.value);
+      if (editIndex !== null) {
+        // Adjust index for Old to New order in Google Sheets
+        const googleSheetIndex = dataRows.length - 1 - editIndex;
+        formData.append('index', googleSheetIndex);
+      }
+
+      try {
+        const response = await fetch(scriptURL, { method: 'POST', body: formData });
+        const result = await response.json();
+        showMessage(result.message, 'success');
+        fetchData();
+        closeForm();
+      } catch {
+        showMessage('An error occurred!', 'error');
+      } finally {
+        saveButton.disabled = false;
+        saveSpinner.style.display = 'none'; // Hide spinner
+        loader.style.display = 'none';
+      }
+    }
+
+    async function deleteData(index) {
+      loader.style.display = 'block';
+      const formData = new URLSearchParams();
+      formData.append('action', 'delete');
+      // Adjust index for Old to New order in Google Sheets
+      const googleSheetIndex = dataRows.length - 1 - index;
+      formData.append('index', googleSheetIndex);
+
+      try {
+        const response = await fetch(scriptURL, { method: 'POST', body: formData });
+        const result = await response.json();
+        showMessage(result.message, 'success');
+        fetchData();
+      } catch {
+        showMessage('An error occurred!', 'error');
+      } finally {
+        loader.style.display = 'none';
+      }
+    }
+
+    function editData(index, itemName, cost) {
+      itemNameInput.value = itemName;
+      costInput.value = cost;
+      openForm('Edit Product', index);
+    }
+
+    function showMessage(msg, type) {
+      message.textContent = msg;
+      message.className = type;
+      message.style.display = 'block';
+      setTimeout(() => (message.style.display = 'none'), 5000);
+    }
+
+    async function deleteDataWithSpinner(index) {
+      const spinner = document.getElementById('spinner');
+      spinner.style.display = 'inline-block'; // Show spinner
+      loader.style.display = 'none'; // Hide loader
+
+      await deleteData(index);
+
+      spinner.style.display = 'none'; // Hide spinner
+    }
+
+    fetchData();
+  </script>
+</body>
+</html>

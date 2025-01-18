@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBR App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin-top: 60px;
+            margin-bottom: 71px;
+        }
+
+        /* Navigation Bar */
+        .bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #0489d1;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            
+        }
+
+        .nav-item {
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-item.active {
+            background-color: #0d035a;
+            color: white;
+        }
+
+        .nav-item:hover {
+            background-color: #0d035a;
+            box-shadow: 0 9px rgb(255, 174, 0);
+        }
+
+        .nav-item:active {
+            background-color: #0d035a;
+            transform: translateY(4px);
+            box-shadow: 0 7px rgba(201, 148, 1, 0.9);
+        }
+
+        .add-button {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            color: #0d035a;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            margin-top: -30px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .add-button:active {
+            background-color: #0d035a;
+            transform: translateY(4px);
+            box-shadow: 0 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .add-button:hover {
+            background-color: #0d035a;
+            box-shadow: 0 5px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+
+
+        /* BADILI HAPA HADI MBISHO */
+
+/* Navigation Bar */
+.nav {
+            position: fixed; /* Fixes the navbar to the top */
+            top: 0; /* Ensures it sticks to the top */
+            left: 0;
+            width: 100%; /* Ensures it spans the entire width */
+            z-index: 1000; /* Ensures it stays above other elements */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #026fb8; /* Primary color */
+            color: white;
+            padding: 10px 20px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+        }
+
+
+        .logo h2 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header h4 {
+            font-size: 15px;
+            margin-right: 35px;
+            padding-left: 10px;
+            padding-left: 10px;
+        }
+
+        .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    h1 {
+      text-align: center;
+      color: #0d035a;
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      overflow: hidden;
+      border-radius: 8px;
+      display: none; /* Ficha jedwali la vitu */
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #0d035a;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f5fa;
+    }
+
+    .profit-stats {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+    }
+
+    .profit-stats p {
+      flex: 1 1 45%;
+      font-size: 1rem;
+      padding: 12px;
+      background-color: #fff;
+      border-left: 5px solid #fd9500;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .profit-stats p:hover {
+      background-color: #fd9500;
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    .profit-stats p span {
+      font-weight: bold;
+      color: #0d035a;
+    }
+
+    .profit-stats .profit-10 {
+      background-color: green;
+      border-left: 5px solid #fd9500;
+      color: white;
+    }
+
+    .profit-stats .profit-10:hover {
+      background-color: #026fb8;
+      color: #fff;
+    }
+    
+    .asilimia {
+      background-color: #0d035a;
+      width: 100%;
+      border-radius: 8px;
+      border: 3px solid #fd9500;
+    }
+
+    .asilimia p span {
+      color: #fd9500;
+      font-weight: bold;
+      font-size: 25px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    footer a {
+      color: #fd9500;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Loading spinner styles */
+    .loading-spinner {
+      display: none;
+      position: fixed; /* Fixed position to make it stay in the center */
+      top: 50%; /* Move it to the middle of the screen vertically */
+      left: 50%; /* Move it to the middle of the screen horizontally */
+      transform: translate(-50%, -50%); /* Adjust the position to truly center */
+      text-align: center;
+      z-index: 9999; /* Ensure it's above all other content */
+    }
+
+    .loading-spinner div {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 4px solid transparent;
+      border-top: 4px solid #fd9500;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    </style>
+</head>
+<body>
+
+    <div class="main">
+
+        <!-- BADILI HAPA HADI MWISHO -->
+
+
+    <nav class="nav">
+        <div class="logo">
+            <h2>MBR</h2>
+        </div>
+        <div class="header">
+            <h4>Loans <a href="loans.html" style="text-decoration: none; color: white; width: 50px;height: 50px; font-size: 25px; background-color: #0d035a; border-radius: 50%; padding-left: 15px;padding-right: 15px;padding-top: 15px;padding-bottom: 15px; border: 2px solid #fd9500;"><i class="fa-solid fa-brush"></i></a></h4>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Total Profit Calculation</h1>
+    
+        <!-- Loading Spinner -->
+        <div class="loading-spinner" id="loadingSpinner">
+          <div></div>
+        </div>
+    
+        <table id="salesData">
+          <thead>
+            <tr>
+              <th>Item Sold</th>
+              <th>Price of Item (Sale)</th>
+              <th>Quantity</th>
+              <th>Date of Sale</th>
+              <th>Cost of Item (Purchase)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Data will be inserted here dynamically -->
+          </tbody>
+        </table>
+    
+        <div class="profit-stats">
+          <p>Today's Profit: <span id="todayProfit">0</span></p>
+          <p>Yesterday's Profit: <span id="yesterdayProfit">0</span></p>
+          <p>This Week's Profit: <span id="weekProfit">0</span></p>
+          <p>This Month's Profit: <span id="monthProfit">0</span></p>
+          <p>This Year's Profit: <span id="yearProfit">0</span></p>
+          
+
+              
+          <!-- New Sections for 10% of weekly and monthly profit with distinct styles -->
+          <div class="asilimia">
+            <p class="profit-10"><strong>10% of This Week's Profit: </strong><span id="weekProfitPercentage">0</span> TZS</p>
+            <p class="profit-10"><strong>10% of This Month's Profit: </strong><span id="monthProfitPercentage">0</span> TZS</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hiden" style="display: none;">
+        <p>Total Profit: <span id="totalProfit">0</span></p>
+      </div>
+    
+      <footer>
+        <p>Developed by <a href="https://www.asyro.pro/technology" target="_blank">Asyro</a>. All rights reserved &copy; <span id="currentYear"></span></p>
+    </footer>
+    
+    <script>
+        // Set the current year dynamically
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+    </script>
+
+ 
+
+    <!-- MWISHO HAPA -->
+
+
+    <div class="bottom-navbar">
+        <a href="reports1.html" class="nav-item" id="nav-reports1" style="background-color: #0d035a;">
+            <i class="fa-solid fa-book-open-reader"></i>
+        </a>
+        <a href="reports2.html" class="nav-item" id="nav-reports2" style="background-color: #0d035a;">
+            <i class="fa-solid fa-chart-simple"></i>
+        </a>
+        <a href="add.html" class="add-button" id="nav-add" style="border: 5px solid #0d035a;"><i class="fa-solid fa-plus"></i></a>
+        <a href="dd-products.html" class="nav-item" id="nav-dd-products" style="background-color: #0d035a;">
+            <i class="fa-solid fa-shop"></i>
+        </a>
+        <a href="hot.html" class="nav-item" id="nav-hot" style="background-color: #0d035a;">
+            <i class="fa-solid fa-mug-hot"></i>
+        </a>
+    </div>
+
+    <script>
+        // Highlight the active navigation item based on the current URL hash or page
+        const currentPath = window.location.hash || window.location.pathname;
+
+        const navItems = {
+            "#reports1.html": "nav-reports1",
+            "#reports2.html": "nav-reports2",
+            "#add.html": "nav-add",
+            "#dd-products.html": "nav-dd-products",
+            "#hot.html": "nav-hot"
+        };
+
+        Object.keys(navItems).forEach(key => {
+            const navElement = document.getElementById(navItems[key]);
+            if (currentPath.includes(key)) {
+                navElement.classList.add('active');
+            } else {
+                navElement.classList.remove('active');
+            }
+        });
+
+
+
+
+
+
+        // FUTA HAPA
+    const SHEET_ID = "1vIWLOORGRGeypJLF1aJXwTdZri__rXmaEHhrguFQ65s";
+    const API_KEY = "AIzaSyDIw6pHVQwrpv1TjkcNsxU1K8ulixnD5QM";
+    const SHEET_NAME = "Sheet1";
+    const API_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
+
+    const salesTable = document.getElementById('salesData').getElementsByTagName('tbody')[0];
+    const totalProfitElement = document.getElementById('totalProfit');
+    const todayProfitElement = document.getElementById('todayProfit');
+    const yesterdayProfitElement = document.getElementById('yesterdayProfit');
+    const weekProfitElement = document.getElementById('weekProfit');
+    const monthProfitElement = document.getElementById('monthProfit');
+    const yearProfitElement = document.getElementById('yearProfit');
+    const weekProfitPercentageElement = document.getElementById('weekProfitPercentage');
+    const monthProfitPercentageElement = document.getElementById('monthProfitPercentage');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+
+    async function fetchSalesData() {
+      try {
+        loadingSpinner.style.display = 'block'; // Show loading spinner
+        const response = await fetch(API_URL);
+        const data = await response.json();
+
+        if (data.values && data.values.length > 0) {
+          let totalProfit = 0;
+          let todayProfit = 0;
+          let yesterdayProfit = 0;
+          let weekProfit = 0;
+          let monthProfit = 0;
+          let yearProfit = 0;
+
+          const currentDate = new Date();
+          currentDate.setHours(0, 0, 0, 0);
+
+          const yesterdayDate = new Date(currentDate);
+          yesterdayDate.setDate(currentDate.getDate() - 1);
+
+          const startOfWeek = new Date(currentDate);
+          startOfWeek.setDate(currentDate.getDate() - ((currentDate.getDay() + 6) % 7));
+
+          const startOfMonth = new Date(currentDate);
+          startOfMonth.setDate(1);
+
+          const startOfYear = new Date(currentDate);
+          startOfYear.setMonth(0, 1);
+
+          data.values.forEach((row, index) => {
+            if (index === 0) return;
+
+            const item = row[0];
+            const price = parseFloat(row[1]) || 0;
+            const quantity = parseInt(row[2]) || 0;
+            const cost = parseFloat(row[4]) || 0;
+            const dateOfSale = row[3];
+            const saleDate = new Date(dateOfSale);
+
+            if (isNaN(saleDate.getTime())) {
+              console.error("Invalid sale date:", dateOfSale);
+              return;
+            }
+
+            const profit = (price - cost) * quantity;
+            totalProfit += profit;
+
+            // Check if sale was made today (considering the time as well)
+            if (isSameDay(saleDate, currentDate)) {
+              todayProfit += profit;
+            }
+
+            if (isSameDay(saleDate, yesterdayDate)) {
+              yesterdayProfit += profit;
+            }
+
+            if (saleDate >= startOfWeek && saleDate <= currentDate) {
+              weekProfit += profit;
+            }
+
+            if (saleDate >= startOfMonth && saleDate <= currentDate) {
+              monthProfit += profit;
+            }
+
+            if (saleDate >= startOfYear && saleDate <= currentDate) {
+              yearProfit += profit;
+            }
+
+            const rowElement = salesTable.insertRow();
+            rowElement.innerHTML = `
+              <td>${item}</td>
+              <td>${price.toFixed(2)}</td>
+              <td>${quantity}</td>
+              <td>${dateOfSale}</td>
+              <td>${cost.toFixed(2)}</td>
+            `;
+          });
+
+          totalProfitElement.textContent = totalProfit.toFixed(2);
+          todayProfitElement.textContent = todayProfit.toFixed(2);
+          yesterdayProfitElement.textContent = yesterdayProfit.toFixed(2);
+          weekProfitElement.textContent = weekProfit.toFixed(2);
+          monthProfitElement.textContent = monthProfit.toFixed(2);
+          yearProfitElement.textContent = yearProfit.toFixed(2);
+
+          // Calculate 10% of the weekly and monthly profit
+          weekProfitPercentageElement.textContent = (weekProfit * 0.1).toFixed(2);
+          monthProfitPercentageElement.textContent = (monthProfit * 0.1).toFixed(2);
+        } else {
+          alert('No data found in the sheet.');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        alert('Failed to load data.');
+      } finally {
+        loadingSpinner.style.display = 'none'; // Hide the loading spinner after fetching data
+      }
+    }
+
+    function isSameDay(date1, date2) {
+      return date1.toDateString() === date2.toDateString();
+    }
+
+    fetchSalesData();
+
+
+    </script>
+
+</body>
+</html>

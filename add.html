@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Record</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fc;
+        }
+
+        .main {
+            padding: 20px;
+            margin-top: 26px;
+        }
+
+        /* Header Section */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background-color: #026fb8;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo h1 {
+            margin: 0;
+            font-size: 20px;
+            color: #fff;
+            margin-right: 20px;
+            white-space: nowrap;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            padding-right: 25px;
+            flex: 1; /* Center-align the search bar */
+        }
+
+        .search-container input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            width: 70%;
+            max-width: 400px;
+            border: 1px solid #ddd;
+            border-radius: 20px 0 0 20px; /* Rounded left corners */
+            outline: none;
+        }
+
+        .search-container input[type="text"]:focus {
+            border-color: #0d035a;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #0d035a;
+            color: #fff;
+            border: none;
+            padding-top: 10px;
+            padding-bottom: 14px;
+            border-radius: 0 20px 20px 0; /* Rounded right corners */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-container button i {
+            font-size: 16px;
+        }
+
+        .search-container button:hover {
+            background-color: #fd9500;
+            border: 1px solid white;
+        }
+
+        .section {
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        
+        /* Navigation Bar */
+        .bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #0489d1;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            
+        }
+
+        .nav-item {
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-item.active {
+            background-color: #0d035a;
+            color: white;
+        }
+
+        .nav-item:hover {
+            background-color: #0d035a;
+            box-shadow: 0 9px rgb(255, 174, 0);
+        }
+
+        .nav-item:active {
+            background-color: #0d035a;
+            transform: translateY(4px);
+            box-shadow: 0 7px rgba(201, 148, 1, 0.9);
+        }
+
+        .add-button {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            color: #0d035a;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            margin-top: -30px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .add-button:active {
+            background-color: #0d035a;
+            transform: translateY(4px);
+            box-shadow: 0 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .add-button:hover {
+            background-color: #0d035a;
+            box-shadow: 0 5px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+        .box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .field {
+            margin-bottom: 15px;
+        }
+
+        .label {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .input {
+            padding: 10px;
+            font-size: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            font-weight: bold;
+            color: #0d035a;
+        }
+
+        .button {
+            background-color: #0d035a;
+            color: white;
+            padding: 12px;
+            width: 100%;
+            font-weight: bold;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #fd9500;
+        }
+
+        .records {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .records a, .records1 {
+            float: right;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .records a, .records1:hover {
+            background-color: #0d035a;
+            color: white;
+        }
+
+        /* Overlay style for loading message */
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        #overlay .message {
+            font-size: 24px;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, #ff0000,#ffff00,#ff00f3,#0033,#ff00c4,#ff0000);
+            animation: animate 10s linear infinite;
+        }
+
+        @keyframes animate{
+          0%{background-position: 0%;}
+          100%{background-position: 400%;}
+        }
+
+        .success {
+            background-color: #28a745; /* Green background for success */
+            color: white;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .error {
+            background-color: #dc3545; /* Red background for error */
+            color: white;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    footer a {
+      color: #fd9500;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+ 
+    </style>
+</head>
+<body>
+
+    <div class="main">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <h1>MBR</h1>
+                </div>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search Item Sold Name..." onkeyup="searchItemName()">
+                    <button onclick="searchItemName()"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <section class="section">
+            <div class="container">
+                <form id="form" method="POST" class="box">
+                    <div class="field">
+                        <label class="label" for="item_sold">Item Sold Name</label>
+                        <div class="control">
+                            <input id="item_sold" class="input" type="text" name="item_sold" readonly required />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label" for="cost_of_item"></label>
+                        <div class="control">
+                            <input id="cost_of_item" class="input" type="hidden" name="cost_of_item" readonly required />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label" for="price">Price sale of Item (in TSH)</label>
+                        <div class="control">
+                            <input id="price" class="input" type="number" placeholder="Enter the price in TSH" name="price" required />
+                        </div>
+                        <p class="help">Please enter the price in Tanzanian Shillings (TSH).</p>
+                    </div>
+
+                    <div class="field">
+                        <label class="label" for="quantity">Quantity</label>
+                        <div class="control">
+                            <input id="quantity" class="input" type="number" placeholder="Enter the quantity" name="quantity" required />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label" for="date_of_sale"></label>
+                        <div class="control">
+                            <input id="date_of_sale" class="input" type="hidden" name="date_of_sale" readonly required />
+                        </div>
+                    </div>
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-primary" type="submit" id="submit-button">Submit</button>
+                        </div>
+                        <div class="control">
+                        
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- Overlay for showing the message -->
+    <div id="overlay">
+        <div class="message" id="message">Recording...</div>
+    </div>
+
+    <footer>
+        <p>Developed by <a href="https://www.asyro.pro/technology" target="_blank">Asyro</a>. All rights reserved &copy; <span id="currentYear"></span></p>
+    </footer>
+    
+    <script>
+        // Set the current year dynamically
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+    </script>
+
+
+<div class="bottom-navbar">
+    <a href="reports1.html" class="nav-item" id="nav-reports1" style="background-color: #0d035a;">
+        <i class="fa-solid fa-book-open-reader"></i>
+    </a>
+    <a href="reports2.html" class="nav-item" id="nav-reports2" style="background-color: #0d035a;">
+        <i class="fa-solid fa-chart-simple"></i>
+    </a>
+    <a href="add.html" class="add-button" id="nav-add" style="border: 5px solid #0d035a;"><i class="fa-solid fa-plus"></i></a>
+    <a href="dd-products.html" class="nav-item" id="nav-dd-products" style="background-color: #0d035a;">
+        <i class="fa-solid fa-shop"></i>
+    </a>
+    <a href="hot.html" class="nav-item" id="nav-hot" style="background-color: #0d035a;">
+        <i class="fa-solid fa-mug-hot"></i>
+    </a>
+</div>
+
+    
+
+    <script>
+
+                // Highlight the active navigation item based on the current URL hash or page
+                const currentPath = window.location.hash || window.location.pathname;
+
+const navItems = {
+    "#reports1.html": "nav-reports1",
+    "#reports2.html": "nav-reports2",
+    "#add.html": "nav-add",
+    "#dd-products.html": "nav-dd-products",
+    "#hot.html": "nav-hot"
+};
+
+Object.keys(navItems).forEach(key => {
+    const navElement = document.getElementById(navItems[key]);
+    if (currentPath.includes(key)) {
+        navElement.classList.add('active');
+    } else {
+        navElement.classList.remove('active');
+    }
+});
+
+// futa hapa
+
+
+        const SHEET_ID = "1vIWLOORGRGeypJLF1aJXwTdZri__rXmaEHhrguFQ65s";
+        const API_KEY = "AIzaSyDIw6pHVQwrpv1TjkcNsxU1K8ulixnD5QM";
+        const SHEET_NAME = "Sheet2";
+        const API_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
+
+        // Function to fetch data from Google Sheets
+        async function searchItemName() {
+            const query = document.getElementById("searchInput").value;
+            if (!query) return;
+
+            const response = await fetch(API_URL);
+            const data = await response.json();
+            const rows = data.values;
+
+            // Iterate through rows and search for the item
+            const item = rows.find(row => row[0].toLowerCase().includes(query.toLowerCase()));
+
+            if (item) {
+                document.getElementById("item_sold").value = item[0]; // Item Sold Name (column A)
+                document.getElementById("cost_of_item").value = item[1]; // Cost Of Item Purchases (column B)
+            }
+        }
+
+        function setCurrentDateTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, "0");
+            const date = String(now.getDate()).padStart(2, "0");
+
+            const formattedDateTime = `${year}/${month}/${date}`;
+            document.getElementById("date_of_sale").value = formattedDateTime;
+        }
+
+        window.onload = setCurrentDateTime;
+
+        document.getElementById("form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const messageEl = document.getElementById("message");
+            const overlayEl = document.getElementById("overlay");
+
+            // Show the overlay and message
+            overlayEl.style.display = "flex";
+            messageEl.textContent = "Recording...";
+
+            const formData = new FormData(this);
+            const payload = new URLSearchParams(formData).toString();
+
+            fetch("https://script.google.com/macros/s/AKfycbwx5BvbfUNXyvCKADTkMA4ZdLYinhlf4NLdxukZMw-g9QbU8Xx7XQ_fIiQ5pSV7yW3F/exec", {
+                method: "POST",
+                body: payload,
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Failed to Record Sales.");
+                    }
+                    return response.text();
+                })
+                .then(() => {
+                    messageEl.textContent = "Wooow!! Sales Recorded!";
+                    messageEl.className = "success";  // Apply success class for green background
+                })
+                .catch(() => {
+                    messageEl.textContent = "No Internet Connection.";
+                    messageEl.className = "error";  // Apply error class for red background
+                })
+                .finally(() => {
+                    setTimeout(() => {
+                        overlayEl.style.display = "none";
+                        document.getElementById("form").reset();
+                        setCurrentDateTime();
+                    }, 3000);
+                });
+        });
+    </script>
+
+</body>
+</html>
