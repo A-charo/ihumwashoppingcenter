@@ -74,6 +74,9 @@
             }
         }
     </style>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 </head>
 <body>
 
@@ -81,11 +84,12 @@
         <h1 id="formTitle">Enter PIN</h1>
         <div id="pinForm">
             <input 
-                type="text" 
+                type="password" 
                 id="pinInput" 
                 maxlength="4" 
                 placeholder="Weka Namba Ya Siri" 
                 required 
+                autocomplete="off" 
                 oninput="validateInput(event)">
         </div>
         <div class="spinner" id="spinner"></div>
@@ -98,6 +102,18 @@
         const responseMessage = document.getElementById('responseMessage');
         const pinForm = document.getElementById('pinForm');
         const formTitle = document.getElementById('formTitle');
+
+        // Safisha input mara ukurasa unapopakiwa
+        document.addEventListener("DOMContentLoaded", () => {
+            pinInput.value = "";
+        });
+
+        // Safisha input kama mtumiaji anarudi nyuma
+        window.addEventListener("pageshow", (event) => {
+            if (event.persisted) {
+                pinInput.value = ""; // Safisha input mara moja mtumiaji akirudi nyuma
+            }
+        });
 
         function validateInput(event) {
             const value = event.target.value;
@@ -114,12 +130,11 @@
                 responseMessage.textContent = ""; // Clear previous message
 
                 setTimeout(() => {
-                    if (pin === "5281") {
+                    const validPins = ["5281", "0144"];
+                    if (validPins.includes(pin)) {
                         sessionStorage.setItem("authenticated", "true");
-                        window.location.href = "saleproducts.html"; // Redirect to sale products
-                    } else if (pin === "0144") {
-                        sessionStorage.setItem("authenticated", "true");
-                        window.location.href = "reports1.html"; // Redirect to report page
+                        const redirectPage = pin === "5281" ? "saleproducts.html" : "reports1.html";
+                        window.location.href = redirectPage; // Redirect to the correct page
                     } else {
                         spinner.style.display = "none"; // Hide spinner
                         responseMessage.textContent = "Namba Ya Siri Uliyoingiza Sio Sahihi.";
